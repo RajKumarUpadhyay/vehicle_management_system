@@ -15,37 +15,33 @@ public class StandardException extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Object> handleRuntimeException(RuntimeException runtimeException, WebRequest webRequest) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setErrorMessage(runtimeException.getMessage());
-        if(!runtimeException.getCause().toString().isEmpty())
-            errorResponse.setCause(runtimeException.getCause());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        ApiError apiError = new ApiError();
+        apiError.setErrorMessage(runtimeException.getMessage());
+        apiError.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException resourceNotFoundException, WebRequest webRequest) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setErrorMessage(resourceNotFoundException.getMessage());
-        if(Objects.nonNull(resourceNotFoundException.getCause()))
-            errorResponse.setCause(resourceNotFoundException.getCause());
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        ApiError apiError = new ApiError();
+        apiError.setErrorMessage(resourceNotFoundException.getMessage());
+        apiError.setStatus(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(SQLException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(SQLException sqlException, WebRequest webRequest) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setErrorMessage(sqlException.getMessage());
-        if(!sqlException.getCause().toString().isEmpty())
-            errorResponse.setCause(sqlException.getCause());
-        return new ResponseEntity<>(errorResponse, HttpStatus.SERVICE_UNAVAILABLE);
+        ApiError apiError = new ApiError();
+        apiError.setErrorMessage(sqlException.getMessage());
+        apiError.setStatus(HttpStatus.SERVICE_UNAVAILABLE);
+        return new ResponseEntity<>(apiError, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
     @ExceptionHandler(UnrecognizedPropertyException.class)
     public ResponseEntity<Object> unrecognizedPropertyException(UnrecognizedPropertyException unrecognizedPropertyException, WebRequest webRequest) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setErrorMessage(unrecognizedPropertyException.getMessage());
-        if(!unrecognizedPropertyException.getCause().toString().isEmpty())
-            errorResponse.setCause(unrecognizedPropertyException.getCause());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        ApiError apiError = new ApiError();
+        apiError.setErrorMessage(unrecognizedPropertyException.getMessage());
+       apiError.setStatus(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 }

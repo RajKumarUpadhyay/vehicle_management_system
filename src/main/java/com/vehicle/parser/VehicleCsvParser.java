@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.vehicle.common.VehicleInfoMappingInCsv;
-import com.vehicle.constant.Constant;
 import com.vehicle.entity.Dealer;
 import com.vehicle.entity.Vehicle;
 import com.vehicle.exception.UnrecognizedPropertyException;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.vehicle.constant.Constant.*;
+import static com.vehicle.constant.Constant.SLASH;
 
 @Component
 public class VehicleCsvParser {
@@ -40,6 +39,7 @@ public class VehicleCsvParser {
             logger.error("Parsing failed due to : "+exception.getMessage());
             throw new RuntimeException(exception.getMessage());
         } catch (UnrecognizedPropertyException unrecognizedPropertyException) {
+            logger.error("Parsing failed due to : "+unrecognizedPropertyException.getMessage());
             throw new UnrecognizedPropertyException(unrecognizedPropertyException.getMessage());
         }
         return buildDealerPersistentObjectList(vehicleInfoMappingInCsvs, dealerId);
@@ -64,6 +64,7 @@ public class VehicleCsvParser {
     }
 
     private File convert(MultipartFile file) throws IOException {
+        logger.info("Convert multipart file object into file object");
         File convFile = new File(file.getOriginalFilename());
         convFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(convFile);

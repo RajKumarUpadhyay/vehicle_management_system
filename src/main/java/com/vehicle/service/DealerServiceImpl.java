@@ -20,14 +20,18 @@ public class DealerServiceImpl implements DealerService {
 
     @Override
     public void saveOrUpdate(List<Dealer> saveDealerWithVehiclesList) {
-        saveDealerWithVehiclesList.forEach(saveDealerVehicleList -> {
-            if (dealerRepository.findByDealerIdAndCode(saveDealerVehicleList.getDealerId(), saveDealerVehicleList.getCode())
-                    .isPresent()) {
-                update(saveDealerVehicleList);
-            } else {
-                create(saveDealerVehicleList);
-            }
-        });
+        try {
+            saveDealerWithVehiclesList.forEach(saveDealerVehicleList -> {
+                if (dealerRepository.findByDealerIdAndCode(saveDealerVehicleList.getDealerId(), saveDealerVehicleList.getCode())
+                        .isPresent()) {
+                    update(saveDealerVehicleList);
+                } else {
+                    create(saveDealerVehicleList);
+                }
+            });
+        } catch (Exception exception) {
+            throw new RuntimeException(exception.getMessage());
+        }
     }
 
 
