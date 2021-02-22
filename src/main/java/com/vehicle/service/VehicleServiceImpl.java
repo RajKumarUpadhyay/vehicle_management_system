@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
@@ -40,7 +39,7 @@ public class VehicleServiceImpl implements VehicleService{
             vehicleExist.setModel(vehicle.getModel());
             vehicleExist.setPrice(vehicle.getPrice());
         } else {
-            throw new EntityNotFoundException("Vehicle not found");
+            throw new ResourceNotFoundException("Vehicle not found");
         }
     }
 
