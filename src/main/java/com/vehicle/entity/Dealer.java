@@ -1,8 +1,6 @@
 package com.vehicle.entity;
 
 
-import com.sun.istack.NotNull;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,14 +8,25 @@ import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "DEALER")
 public class Dealer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column
+    private long id;
+
     @Column(name = "DEALER_ID")
-    @NotNull
-    private int dealer_id;
-    @OneToMany(fetch = FetchType.LAZY)
+    private long dealerId;
+    @OneToOne
     private Vehicle vehicle;
+    @Column(name = "CODE")
+    private String code;
+
+    public Dealer(long dealerId, Vehicle vehicle, String code) {
+        this.dealerId = dealerId;
+        this.vehicle = vehicle;
+        this.code = code;
+    }
 }
