@@ -1,12 +1,11 @@
 package com.vehicle.service;
 
 import com.vehicle.common.VehicleSearchRequest;
-import com.vehicle.constant.Constant;
 import com.vehicle.entity.Vehicle;
+import com.vehicle.exception.ResourceNotFoundException;
 import com.vehicle.repositiory.VehicleRepository;
 import com.vehicle.specification.VehicleSearchCriteriaSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +46,7 @@ public class VehicleServiceImpl implements VehicleService{
 
     @Override
     public List<Vehicle> searchVehicleBasedOnCriteria(VehicleSearchRequest vehicleSearchRequest) {
-
+        List<Vehicle> vehicleList;
         Specification<Vehicle> vehicleSpecification = null;
         if (Objects.nonNull(vehicleSearchRequest.getMake()) && !vehicleSearchRequest.getMake().isEmpty())   {
             Specification<Vehicle> byParam = VehicleSearchCriteriaSpecification
@@ -71,7 +70,10 @@ public class VehicleServiceImpl implements VehicleService{
         }
 
         if (Objects.isNull(vehicleSpecification))
-            return (List<Vehicle>) vehicleRepository.findAll();
-        return vehicleRepository.findAll(vehicleSpecification);
+            vehicleList = (List<Vehicle>) vehicleRepository.findAll();
+        vehicleList = vehicleRepository.findAll(vehicleSpecification);
+        if (vehicleList.size() == 0)
+            throw new ResourceNotFoundException("Resource Not Present");
+        return vehicleList;
     }
 }

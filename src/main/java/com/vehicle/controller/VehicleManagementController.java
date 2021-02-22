@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
+@RequestMapping(path = "/vehicle-management-service")
 public class VehicleManagementController {
 
     public static final Logger logger = Logger.getLogger(VehicleManagementController.class);

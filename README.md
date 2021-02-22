@@ -22,8 +22,6 @@ vehicle management system will use to manage information about vehicles based on
 # Swagger documentation: 
  User can open below link for more detail information about services and request parameters.
  http://localhost:8080/swagger-ui.htm
- ### Maintainer 
- Raj K Upadhyay
  
  ### Maintainer 
  Raj K Upadhyay

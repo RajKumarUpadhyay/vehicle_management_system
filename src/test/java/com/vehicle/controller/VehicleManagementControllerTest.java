@@ -87,7 +87,7 @@ class VehicleManagementControllerTest {
 
         MockMultipartFile csvFile = new MockMultipartFile(
                 "vehicle.csv", "", "multipart/form-data", vehicleDataInfo.getBytes());
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/upload_csv/1/")
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/vehicle-management-service/upload_csv/1/")
                 .file("vehicle", csvFile.getBytes())
                 .characterEncoding("UTF-8"))
                 .andExpect(status().isCreated());
@@ -112,7 +112,7 @@ class VehicleManagementControllerTest {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         String dealerVehicleInfo = ow.writeValueAsString(vehicleInfoMappingInJsonList);
 
-        mockMvc.perform(post("/vehicle_listings/1/").content(dealerVehicleInfo)
+        mockMvc.perform(post("/vehicle-management-service/vehicle_listings/1/").content(dealerVehicleInfo)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
 
@@ -122,7 +122,7 @@ class VehicleManagementControllerTest {
 
     @Test
     void searchVehicleBasedOnCriteriaDefinition() throws Exception {
-        mockMvc.perform(get("/searchVehicle?make=Mercedes"))
+        mockMvc.perform(get("/vehicle-management-service/searchVehicle?make=Mercedes"))
                 .andExpect(status().isOk());
     }
 }

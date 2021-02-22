@@ -19,19 +19,19 @@ public class SpringFoxConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("go.ip.controller"))
-                .paths(PathSelectors.ant("/ip-mgmt-service/*"))
+                .apis(RequestHandlerSelectors.basePackage("com.vehicle.controller"))
+                .paths(PathSelectors.ant("/vehicle-management-service/*"))
                 .build()
                 .apiInfo(apiInfo());
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfo(
-                "IP Management Service",
-                "IP management service API to handle all operation for IP address in IP POOL.",
+                "Vehicle Management Service",
+                "Vehicle Management Service API to handle all defined operation for Cars and Dealers.",
                 "1.0",
                 "Terms of service",
-                new Contact("Raj K Upadhyay", "www.go.com", "raj_upadhyay@hotmail.com"),
+                new Contact("Raj K Upadhyay", "www.heycar.com", "raj_upadhyay@hotmail.com"),
                 "License of API", "API license URL", Collections.emptyList());
     }
 }

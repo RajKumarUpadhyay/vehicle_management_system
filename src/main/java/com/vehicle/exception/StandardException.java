@@ -8,6 +8,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.sql.SQLException;
+import java.util.Objects;
 
 @ControllerAdvice
 public class StandardException extends ResponseEntityExceptionHandler {
@@ -16,7 +17,8 @@ public class StandardException extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleRuntimeException(RuntimeException runtimeException, WebRequest webRequest) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorMessage(runtimeException.getMessage());
-        errorResponse.setCause(runtimeException.getCause());
+        if(!runtimeException.getCause().toString().isEmpty())
+            errorResponse.setCause(runtimeException.getCause());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -24,7 +26,8 @@ public class StandardException extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException resourceNotFoundException, WebRequest webRequest) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorMessage(resourceNotFoundException.getMessage());
-        errorResponse.setCause(resourceNotFoundException.getCause());
+        if(Objects.nonNull(resourceNotFoundException.getCause()))
+            errorResponse.setCause(resourceNotFoundException.getCause());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
@@ -32,7 +35,8 @@ public class StandardException extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleResourceNotFoundException(SQLException sqlException, WebRequest webRequest) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorMessage(sqlException.getMessage());
-        errorResponse.setCause(sqlException.getCause());
+        if(!sqlException.getCause().toString().isEmpty())
+            errorResponse.setCause(sqlException.getCause());
         return new ResponseEntity<>(errorResponse, HttpStatus.SERVICE_UNAVAILABLE);
     }
 
@@ -40,7 +44,8 @@ public class StandardException extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> unrecognizedPropertyException(UnrecognizedPropertyException unrecognizedPropertyException, WebRequest webRequest) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorMessage(unrecognizedPropertyException.getMessage());
-        errorResponse.setCause(unrecognizedPropertyException.getCause());
+        if(!unrecognizedPropertyException.getCause().toString().isEmpty())
+            errorResponse.setCause(unrecognizedPropertyException.getCause());
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 }
