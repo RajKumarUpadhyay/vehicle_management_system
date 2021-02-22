@@ -14,9 +14,9 @@ vehicle management system will use to manage information about vehicles based on
     
 |  HTTP METHOD | END POINT   |  DESCRIPTION |
 |---|---|---|
-|  POST | http://localhost:8080/upload_csv/{dealerId}/  | This end point will upload csv data into database  |
-|  POST | http://localhost:8080/vehicle_listings/{dealerId}/  | This end point will persist vehicle json data into database |
-|  GET | http://localhost:8080/searchVehicle  | This endpoint will serach vehicle based on specified parameters |
+|  POST | http://localhost:8080/vehicle-management-service/upload_csv/{dealerId}/  | This end point will upload csv data into database  |
+|  POST | http://localhost:8080/vehicle-management-service/vehicle_listings/{dealerId}/  | This end point will persist vehicle json data into database |
+|  GET | http://localhost:8080/vehicle-management-service/searchVehicle  | This endpoint will serach vehicle based on specified parameters |
 |  GET | http://127.0.01:9001/actuator/health  | This will provide service heath status. |
 
 # Swagger documentation: 
